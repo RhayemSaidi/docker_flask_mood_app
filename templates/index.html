@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Mood App 🌤️</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #c3ecf8, #f5d9e5);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover {
+            background: #555;
+        }
+        p {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌼 Docker Mood Generator</h1>
+    <button onclick="getMood()">Generate Mood</button>
+    <p id="moodText"></p>
+
+    <script>
+        async function getMood() {
+            const res = await fetch('/mood');
+            const data = await res.json();
+            document.getElementById('moodText').innerText = data.message;
+        }
+    </script>
+</body>
+</html>
