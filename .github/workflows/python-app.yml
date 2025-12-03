@@ -1,4 +1,4 @@
-name: CI/CD Docker Flask App
+name: Python Docker CI/CD
 
 on:
   push:
