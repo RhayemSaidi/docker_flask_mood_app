@@ -1,4 +1,4 @@
-name: Python application
+name: Build and Push Docker Image
 
 on:
   push:
@@ -7,12 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  docker:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,3 +28,17 @@ jobs:
     - name: Run tests
       run: |
         PYTHONPATH=$(pwd) pytest -vv
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Docker image
+      run: |
+        docker build -t abderrahmensaidi/docker_flask_mood_app:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push abderrahmensaidi/docker_flask_mood_app:latest
